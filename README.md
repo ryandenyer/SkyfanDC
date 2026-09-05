@@ -41,15 +41,15 @@ Create a new ESPHome device and use the following configuration:
 
 ```yaml
 substitutions:
-  fan_name: Music Room Fan
+  fan_name: SkyFan DC
   fan_model: "SKY1203"
 
 packages:
   skyfandc: github://ryandenyer/SkyfanDC/skyfandc.yaml@main
 
 esphome:
-  name: musicroomfan
-  friendly_name: Music Room Fan
+  name: skyfandc
+  friendly_name: SkyFan DC
 
 esp8266:
   board: d1_mini
@@ -69,6 +69,99 @@ ota:
   - platform: esphome
 
 captive_portal:
+```
+
+## Customization
+
+### Fan Name
+
+The `fan_name` substitution controls the names of all entities created by the package.
+
+Example:
+
+```yaml
+substitutions:
+  fan_name: Master Bedroom Fan
+```
+
+This will create entities such as:
+
+```text
+Master Bedroom Fan
+Master Bedroom Fan Light
+Master Bedroom Fan Mode
+Master Bedroom Fan Timer
+Master Bedroom Fan Power
+Master Bedroom Fan RSSI
+```
+
+### Fan Model
+
+The `fan_model` substitution selects the power curve used for estimated fan power monitoring.
+
+Example:
+
+```yaml
+substitutions:
+  fan_model: "SKY1503"
+```
+
+Supported models:
+
+```text
+SKY903
+SKY1203
+SKY1303
+SKY1503
+SKY1204
+SKY1404
+```
+
+### Datapoints
+
+Most installations use the default datapoints and require no changes.
+
+Override them only if your controller uses different values:
+
+```yaml
+substitutions:
+  dp_power: "1"
+  dp_speed: "3"
+  dp_direction: "8"
+
+  dp_mode: "2"
+  dp_timer: "22"
+
+  dp_light: "15"
+  dp_light_dimmer: "16"
+```
+
+### Optional Settings
+
+Additional package settings can also be overridden:
+
+```yaml
+substitutions:
+  light_max_power: "20"
+
+  ntc_vcc_pin: "14"
+  ntc_adc_pin: "17"
+
+  i2c_sda_pin: "GPIO4"
+  i2c_scl_pin: "GPIO5"
+
+  tmp117_update_interval: "60s"
+```
+
+### Example
+
+```yaml
+substitutions:
+  fan_name: Outdoor Fan
+  fan_model: "SKY1404"
+
+packages:
+  skyfandc: github://ryandenyer/SkyfanDC/skyfandc.yaml@main
 ```
 
 ## Supported Fan Models
@@ -184,6 +277,14 @@ dp_light: "15"
 dp_light_dimmer: "16"
 
 light_max_power: "20"
+
+ntc_vcc_pin: "14"
+ntc_adc_pin: "17"
+
+i2c_sda_pin: "GPIO4"
+i2c_scl_pin: "GPIO5"
+
+tmp117_update_interval: "60s"
 ```
 
 ## Home Assistant
@@ -236,6 +337,26 @@ Fan power values are estimated from the original SkyFan DC datasheet specificati
 ```text
 0.0, 3.9, 6.5, 12.2, 21.4, 38.0
 ```
+
+## Home Assistant Entity Categories
+
+The package uses Home Assistant entity categories where appropriate:
+
+### Primary Entities
+
+- Fan
+- Light
+- Mode
+- Timer
+
+### Diagnostic Entities
+
+Disabled by default:
+
+- Wi-Fi RSSI
+- TMP117 Sensors
+- Temperature Monitoring
+- Estimated Power Sensors
 
 ## Disclaimer
 
