@@ -19,9 +19,7 @@ tuya:
 
   on_datapoint_update:
 
-    #
-    # MODE
-    #
+    # Mode
     - sensor_datapoint: ${dp_mode}
       datapoint_type: enum
       then:
@@ -45,9 +43,7 @@ tuya:
                 break;
             }
 
-    #
-    # TIMER
-    #
+    # Timer
     - sensor_datapoint: ${dp_timer}
       datapoint_type: enum
       then:
@@ -75,8 +71,11 @@ tuya:
 
 fan:
   - platform: tuya
+    id: skyfandc_fan
     name: ${fan_name}
+
     switch_datapoint: ${dp_power}
     speed_datapoint: ${dp_speed}
     direction_datapoint: ${dp_direction}
+
     speed_count: ${speed_count}
