@@ -1,68 +1,60 @@
-# Bonus temperature sensor
----
-substitutions:
-  temp_name: SkyFanDC-Temp
-
-# Setup temperature reading so you don't get a random reading come through at 
-# startup
-esphome:
-  on_boot: 
-    priority: -100
-    then:
-      - switch.turn_on: ntc_vcc
-      - component.update: temp_voltage
-      - switch.turn_off: ntc_vcc
-      - sensor.template.publish:
-          id: skyfan_temp
-          state: !lambda 'return id(ntc_temp).state;'
-
 sensor:
-  #Template sensor that sends the correct reading through to Home Assistant
-  - id: skyfan_temp
-    platform: template
-    name: ${temp_name}
+  # Published temperature
+  - platform: template
+    id: skyfandc_temp
+    name: "${fan_name} Temperature"
     unit_of_measurement: "°C"
-    device_class: "temperature"
-    state_class: "measurement"
+    device_class: temperature
+    state_class: measurement
     accuracy_decimals: 0
     disabled_by_default: true
-  
-  #ADC sensor to get the voltage drop on the thermister
-  - id: temp_voltage
-    platform: adc
-    pin: 17
+
+  # ADC reading
+  - platform: adc
+    id: skyfandc_temp_voltage
+    pin: ${ntc_adc_pin}
     update_interval: never
-  
-  #Use voltage drop to calculate resistance of the thermister
-  - id: temp_resistance
-    platform: resistance
-    sensor: temp_voltage
+
+  # Resistance calculation
+  - platform: resistance
+    id: skyfandc_temp_resistance
+    sensor: skyfandc_temp_voltage
     configuration: DOWNSTREAM
     resistor: 100kOhm
     reference_voltage: 3.3
-  
-  #Use resistance to calculate the temperature
-  - id: ntc_temp
-    platform: ntc
-    sensor: temp_resistance
+
+  # NTC calculation
+  - platform: ntc
+    id: skyfandc_ntc_temp
+    sensor: skyfandc_temp_resistance
     calibration:
       b_constant: 3435
       reference_temperature: 25°C
       reference_resistance: 10kOhm
 
-# Only turn on the power to the thermister to check temp, to stop self warming 
-# effect
+switch:
+  - platform: gpio
+    id: skyfandc_ntc_vcc
+    pin: ${ntc_vcc_pin}
+    restore_mode: ALWAYS_OFF
+
+esphome:
+  on_boot:
+    priority: -100
+    then:
+      - switch.turn_on: skyfandc_ntc_vcc
+      - component.update: skyfandc_temp_voltage
+      - switch.turn_off: skyfandc_ntc_vcc
+      - sensor.template.publish:
+          id: skyfandc_temp
+          state: !lambda "return id(skyfandc_ntc_temp).state;"
+
 interval:
   - interval: 30s
     then:
-      - switch.turn_on: ntc_vcc
-      - component.update: temp_voltage
-      - switch.turn_off: ntc_vcc
+      - switch.turn_on: skyfandc_ntc_vcc
+      - component.update: skyfandc_temp_voltage
+      - switch.turn_off: skyfandc_ntc_vcc
       - sensor.template.publish:
-          id: skyfan_temp
-          state: !lambda 'return id(ntc_temp).state;'
-
-switch:
-  - id: ntc_vcc
-    platform: gpio
-    pin: 14
+          id: skyfandc_temp
+          state: !lambda "return id(skyfandc_ntc_temp).state;"

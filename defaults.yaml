@@ -1,15 +1,34 @@
 substitutions:
+
+  # Names
   fan_name: SkyFan DC
   light_name: SkyFan Light
 
+  # Fan datapoints
   dp_power: "1"
   dp_speed: "3"
   dp_direction: "8"
 
+  # Mode and timer
   dp_mode: "2"
   dp_timer: "22"
 
+  # Light datapoint
   dp_light: "15"
 
+  # Fan configuration
   speed_count: "5"
-``
+
+  # Fan model
+  # Supported: SKY903, SKY1203, SKY1303, SKY1503, SKY1204, SKY1404
+  fan_model: "SKY1203"
+
+  # Light power estimation (W)
+  light_max_power: "20"
+
+  # NTC sensor pins
+  ntc_vcc_pin: "14"
+  ntc_adc_pin: "17"
+
+  # TMP117 sensors
+  tmp117_update_interval: "60s"

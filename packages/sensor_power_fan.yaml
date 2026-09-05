@@ -1,30 +1,53 @@
-# This exposes a faux Power Sensor to the frontend (like Home Assistant).
-# The power values (Watts) for each fan and speed speed is sourced from the
-# Skyfan DC datasheets.
----
-substitutions:
-  power_fan_name: $fan_name power
-  skyfan_model: "SKY1203"
+# Estimated fan power based on SkyFan DC datasheet values.
+# Uses interpolated 5-speed curves while preserving the original
+# maximum power value for each model.
 
 sensor:
-  - id: fan_power
-    platform: template
-    name: ${power_fan_name}
+  - platform: template
+    id: skyfandc_fan_power
+    name: "${fan_name} Power"
+
     update_interval: 30s
+
     unit_of_measurement: "W"
-    device_class: "power"
-    state_class: "measurement"
+    device_class: power
+    state_class: measurement
     accuracy_decimals: 1
+
     lambda: |-
-      float SKY903[7] = {0,3,4.8,7,12,19.5,32};
-      float SKY1203[7] = {0,3.6,5.4,8,15,22,32.5};
-      float SKY1303[7] = {0,3.9,5.8,9,15.6,25.2,31.8};
-      float SKY1503[7] = {0,3.9,6,9,16,26,44.2};
-      float SKY1204[7] = {0,3.8,5.8,9,17,27,30};
-      float SKY1404[7] = {0,3.5,5.5,8,15,23,38};      
-      if (id(skyfan).state) {
-        return $skyfan_model[ id(skyfan).speed ]; 
-      } else {
-        return 0.0;
-      }
+      float SKY903[6]  = {0.0, 3.4, 5.7, 10.0, 18.0, 32.0};
+      float SKY1203[6] = {0.0, 4.0, 6.4, 12.2, 20.6, 32.5};
+      float SKY1303[6] = {0.0, 4.3, 7.1, 13.0, 23.3, 31.8};
+      float SKY1503[6] = {0.0, 4.3, 7.2, 13.2, 24.0, 44.2};
+      float SKY1204[6] = {0.0, 4.2, 7.1, 13.8, 25.0, 30.0};
+      float SKY1404[6] = {0.0, 3.9, 6.5, 12.2, 21.4, 38.0};
+
+      if (!id(skyfandc_fan).state)
+        return 0.0f;
+
+      int speed = id(skyfandc_fan).speed;
+
+      if (speed < 0 || speed > 5)
+        return 0.0f;
+
+      if ("${fan_model}" == std::string("SKY903"))
+        return SKY903[speed];
+
+      if ("${fan_model}" == std::string("SKY1203"))
+        return SKY1203[speed];
+
+      if ("${fan_model}" == std::string("SKY1303"))
+        return SKY1303[speed];
+
+      if ("${fan_model}" == std::string("SKY1503"))
+        return SKY1503[speed];
+
+      if ("${fan_model}" == std::string("SKY1204"))
+        return SKY1204[speed];
+
+      if ("${fan_model}" == std::string("SKY1404"))
+        return SKY1404[speed];
+
+      return 0.0f;
+
     disabled_by_default: true

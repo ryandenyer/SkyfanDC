@@ -1,9 +1,28 @@
-# Display WIFI rssi as a sensor in Home Assistant
-
-substitutions:
-  fan_rssi: $fan_rssi
+# Wi-Fi diagnostics
 
 sensor:
   - platform: wifi_signal
-    name: ${fan_rssi}
+    id: skyfandc_wifi_rssi
+    name: "${fan_name} RSSI"
+
     update_interval: 60s
+
+    entity_category: diagnostic
+    disabled_by_default: true
+
+  - platform: copy
+    source_id: skyfandc_wifi_rssi
+    name: "${fan_name} WiFi"
+
+    entity_category: diagnostic
+    unit_of_measurement: "%"
+    device_class: ""
+    disabled_by_default: true
+
+    filters:
+      - lambda: |-
+          if (x <= -100)
+            return 0.0;
+          if (x >= -50)
+            return 100.0;
+          return 2.0 * (x + 100.0);

@@ -2,15 +2,16 @@ packages:
   defaults: !include defaults.yaml
 
   fan: !include packages/tuya_fan.yaml
+
   mode: !include packages/mode_select.yaml
   timer: !include packages/timer_select.yaml
 
   light: !include packages/tuya_light.yaml
 
-  rssi: !include packages/sensor_rssi.yaml
-
-  fan_power: !include packages/sensor_power_fan.yaml
-  light_power: !include packages/sensor_power_light.yaml
+  power_fan: !include packages/sensor_power_fan.yaml
+  power_light: !include packages/sensor_power_light.yaml
 
   ntc: !include packages/sensor_ntc.yaml
   tmp117: !include packages/sensor_tmp117.yaml
+
+  rssi: !include packages/sensor_rssi.yaml

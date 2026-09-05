@@ -1,33 +1,38 @@
-# This exposes TMP117 Temperature Sensor(s) to the frontend (like Home Assistant).
----
-substitutions:
-  tmp117_name: SkyFanDC TMP117
+# TMP117 temperature sensors
 
 sensor:
   - platform: tmp117
-    name: ${tmp117_name} 0x48
-    update_interval: 60s
+    id: skyfandc_tmp117_48
+    name: "${fan_name} TMP117 0x48"
     address: 0x48
+    update_interval: ${tmp117_update_interval}
     accuracy_decimals: 2
+    entity_category: diagnostic
     disabled_by_default: true
 
   - platform: tmp117
-    name: ${tmp117_name} 0x49
-    update_interval: 60s
+    id: skyfandc_tmp117_49
+    name: "${fan_name} TMP117 0x49"
     address: 0x49
+    update_interval: ${tmp117_update_interval}
     accuracy_decimals: 2
+    entity_category: diagnostic
     disabled_by_default: true
 
   - platform: tmp117
-    name: ${tmp117_name} 0x4A
-    update_interval: 60s
+    id: skyfandc_tmp117_4a
+    name: "${fan_name} TMP117 0x4A"
     address: 0x4A
+    update_interval: ${tmp117_update_interval}
     accuracy_decimals: 2
+    entity_category: diagnostic
     disabled_by_default: true
 
   - platform: tmp117
-    name: ${tmp117_name} 0x4B
-    update_interval: 60s
+    id: skyfandc_tmp117_4b
+    name: "${fan_name} TMP117 0x4B"
     address: 0x4B
+    update_interval: ${tmp117_update_interval}
     accuracy_decimals: 2
+    entity_category: diagnostic
     disabled_by_default: true
