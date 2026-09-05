@@ -42,7 +42,7 @@ Create a new ESPHome device and use the following configuration:
 ```yaml
 substitutions:
   fan_name: SkyFan DC
-  fan_model: "SKY1203"
+  fan_model: "SKY1203" #change to your fan model
 
 packages:
   skyfandc: github://ryandenyer/SkyfanDC/skyfandc.yaml@main
@@ -60,6 +60,7 @@ logger:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  ap:
 
 api:
   encryption:
