@@ -1,8 +1,6 @@
 packages:
   defaults: !include defaults.yaml
 
-  i2c: !include packages/i2c.yaml
-
   fan: !include packages/tuya_fan.yaml
   mode: !include packages/mode_select.yaml
   timer: !include packages/timer_select.yaml

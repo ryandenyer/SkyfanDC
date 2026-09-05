@@ -3,6 +3,12 @@ uart:
   tx_pin: GPIO1
   baud_rate: 9600
 
+i2c:
+  id: skyfandc_i2c
+  sda: ${i2c_sda_pin}
+  scl: ${i2c_scl_pin}
+  scan: true
+
 globals:
   - id: last_mode
     type: int
@@ -72,7 +78,8 @@ tuya:
 fan:
   - platform: tuya
     id: skyfandc_fan
-    name: ${fan_name}
+
+    name: "${fan_name}"
 
     switch_datapoint: ${dp_power}
     speed_datapoint: ${dp_speed}
