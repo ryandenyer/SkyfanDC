@@ -15,13 +15,13 @@ packages:
     file: sensor_rssi.yaml
 
 substitutions:
-  device_name: easy-skyfandc
-  fan_name: SkyFanDC
-  light_name: SkyFanDC-Light
-  temp_name: SkyFanDC-Temp
-  tmp117_name: "SkyFanDC TMP117"  
+  device_name: skyfandc
+  fan_name: "Music Room Fan"
+  light_name: "Music Room Light"
+  temp_name: "Music Room Temp"
+  tmp117_name: "Music Room TMP117"
   skyfan_model: "SKY1203"
-  fan_rssi: "SkyFanDC-RSSI"
+  fan_rssi: "Music Room RSSI"
 
 esphome:
   name: ${device_name}
@@ -53,7 +53,8 @@ i2c:
 
 api:
   encryption:
-    key: !secret spareroomfan_f0e237__encryption_key
+    key: !secret easy_skyfandc_ef8941__encryption_key
+
 ota:
   - platform: esphome
 
@@ -62,6 +63,7 @@ wifi:
   password: !secret wifi_password
   fast_connect: true
   post_connect_roaming: false
+  use_address: 192.168.1.173
   
   ap: {}
 
