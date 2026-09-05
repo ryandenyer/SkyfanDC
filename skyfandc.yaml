@@ -1,0 +1,38 @@
+packages:
+  skyfan.tuya_fan: !include
+    file: tuya_fan.yaml  
+  skyfan.tuya_light: !include
+    file: tuya_light.yaml  
+  skyfan.sensor_ntc: !include
+    file: sensor_ntc.yaml 
+  skyfan.sensor_tmp117: !include
+    file: sensor_tmp117.yaml 
+  skyfan.sensor_power_fan: !include
+    file: sensor_power_fan.yaml 
+  skyfan.sensor_power_light: !include
+    file: sensor_power_light.yaml
+  skyfan.sensor_rssi: !include
+    file: sensor_rssi.yaml
+
+substitutions:
+  device_name: easy-skyfandc
+  fan_name: SkyFanDC
+  light_name: SkyFanDC-Light
+  temp_name: SkyFanDC-Temp
+  tmp117_name: "SkyFanDC TMP117"  
+  skyfan_model: "SKY1203"
+  fan_rssi: "SkyFanDC-RSSI"
+
+esphome:
+  name: ${device_name}
+  name_add_mac_suffix: false
+  project:
+    name: ryandenyer.skyfandc
+    version: "2026.09.05"
+  on_boot: #Setup temperature reading so you don't get a random reading come through at startup
+    priority: -100
+    then:
+      - switch.turn_on: led
+      - delay: 2s
+      - switch.turn_off: led
+
