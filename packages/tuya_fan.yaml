@@ -37,15 +37,15 @@ tuya:
 
             switch (x) {
               case 0:
-                id(fan_mode).publish_state("Normal");
+                id(skyfandc_mode).publish_state("Normal");
                 break;
 
               case 1:
-                id(fan_mode).publish_state("Eco");
+                id(skyfandc_mode).publish_state("Eco");
                 break;
 
               case 2:
-                id(fan_mode).publish_state("Sleep");
+                id(skyfandc_mode).publish_state("Sleep");
                 break;
             }
 
@@ -60,25 +60,24 @@ tuya:
             id(last_timer) = x;
 
             switch (x) {
-              case 0:  id(fan_timer).publish_state("Off"); break;
-              case 1:  id(fan_timer).publish_state("1 Hour"); break;
-              case 2:  id(fan_timer).publish_state("2 Hours"); break;
-              case 3:  id(fan_timer).publish_state("3 Hours"); break;
-              case 4:  id(fan_timer).publish_state("4 Hours"); break;
-              case 5:  id(fan_timer).publish_state("5 Hours"); break;
-              case 6:  id(fan_timer).publish_state("6 Hours"); break;
-              case 7:  id(fan_timer).publish_state("7 Hours"); break;
-              case 8:  id(fan_timer).publish_state("8 Hours"); break;
-              case 9:  id(fan_timer).publish_state("9 Hours"); break;
-              case 10: id(fan_timer).publish_state("10 Hours"); break;
-              case 11: id(fan_timer).publish_state("11 Hours"); break;
-              case 12: id(fan_timer).publish_state("12 Hours"); break;
+              case 0:  id(skyfandc_timer).publish_state("Off"); break;
+              case 1:  id(skyfandc_timer).publish_state("1 Hour"); break;
+              case 2:  id(skyfandc_timer).publish_state("2 Hours"); break;
+              case 3:  id(skyfandc_timer).publish_state("3 Hours"); break;
+              case 4:  id(skyfandc_timer).publish_state("4 Hours"); break;
+              case 5:  id(skyfandc_timer).publish_state("5 Hours"); break;
+              case 6:  id(skyfandc_timer).publish_state("6 Hours"); break;
+              case 7:  id(skyfandc_timer).publish_state("7 Hours"); break;
+              case 8:  id(skyfandc_timer).publish_state("8 Hours"); break;
+              case 9:  id(skyfandc_timer).publish_state("9 Hours"); break;
+              case 10: id(skyfandc_timer).publish_state("10 Hours"); break;
+              case 11: id(skyfandc_timer).publish_state("11 Hours"); break;
+              case 12: id(skyfandc_timer).publish_state("12 Hours"); break;
             }
 
 fan:
   - platform: tuya
     id: skyfandc_fan
-
     name: "${fan_name}"
 
     switch_datapoint: ${dp_power}
