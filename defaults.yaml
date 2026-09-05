@@ -13,8 +13,9 @@ substitutions:
   dp_mode: "2"
   dp_timer: "22"
 
-  # Light datapoint
+  # Light datapoints
   dp_light: "15"
+  dp_light_dimmer: "16"
 
   # Fan configuration
   speed_count: "5"

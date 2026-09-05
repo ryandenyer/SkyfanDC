@@ -1,7 +1,7 @@
 select:
   - platform: template
     name: "${fan_name} Timer"
-    id: fan_timer
+    id: skyfandc_timer
 
     optimistic: false
 
