@@ -1,3 +1,5 @@
+i2c:
+
 packages:
   defaults: !include defaults.yaml
 
@@ -14,5 +16,3 @@ packages:
   tmp117: !include packages/sensor_tmp117.yaml
 
   rssi: !include packages/sensor_rssi.yaml
-
-i2c:
