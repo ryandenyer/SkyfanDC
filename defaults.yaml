@@ -31,5 +31,9 @@ substitutions:
   ntc_vcc_pin: "14"
   ntc_adc_pin: "17"
 
+  # I2C pins
+  i2c_sda_pin: "GPIO4"
+  i2c_scl_pin: "GPIO5"
+
   # TMP117 sensors
   tmp117_update_interval: "60s"
