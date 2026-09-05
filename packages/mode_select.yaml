@@ -1,0 +1,20 @@
+select:
+  - platform: template
+    name: "${fan_name} Mode"
+    id: fan_mode
+
+    optimistic: false
+
+    options:
+      - "Normal"
+      - "Eco"
+      - "Sleep"
+
+    set_action:
+      - lambda: |-
+          if (x == "Normal")
+            id(tuya_mcu).set_enum_datapoint_value(${dp_mode}, 0);
+          else if (x == "Eco")
+            id(tuya_mcu).set_enum_datapoint_value(${dp_mode}, 1);
+          else if (x == "Sleep")
+            id(tuya_mcu).set_enum_datapoint_value(${dp_mode}, 2);

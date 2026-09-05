@@ -1,0 +1,15 @@
+substitutions:
+  fan_name: SkyFan DC
+  light_name: SkyFan Light
+
+  dp_power: "1"
+  dp_speed: "3"
+  dp_direction: "8"
+
+  dp_mode: "2"
+  dp_timer: "22"
+
+  dp_light: "15"
+
+  speed_count: "5"
+``

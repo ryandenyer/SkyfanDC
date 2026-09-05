@@ -1,0 +1,82 @@
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 9600
+
+globals:
+  - id: last_mode
+    type: int
+    restore_value: no
+    initial_value: '-1'
+
+  - id: last_timer
+    type: int
+    restore_value: no
+    initial_value: '-1'
+
+tuya:
+  id: tuya_mcu
+
+  on_datapoint_update:
+
+    #
+    # MODE
+    #
+    - sensor_datapoint: ${dp_mode}
+      datapoint_type: enum
+      then:
+        - lambda: |-
+            if (x == id(last_mode))
+              return;
+
+            id(last_mode) = x;
+
+            switch (x) {
+              case 0:
+                id(fan_mode).publish_state("Normal");
+                break;
+
+              case 1:
+                id(fan_mode).publish_state("Eco");
+                break;
+
+              case 2:
+                id(fan_mode).publish_state("Sleep");
+                break;
+            }
+
+    #
+    # TIMER
+    #
+    - sensor_datapoint: ${dp_timer}
+      datapoint_type: enum
+      then:
+        - lambda: |-
+            if (x == id(last_timer))
+              return;
+
+            id(last_timer) = x;
+
+            switch (x) {
+              case 0:  id(fan_timer).publish_state("Off"); break;
+              case 1:  id(fan_timer).publish_state("1 Hour"); break;
+              case 2:  id(fan_timer).publish_state("2 Hours"); break;
+              case 3:  id(fan_timer).publish_state("3 Hours"); break;
+              case 4:  id(fan_timer).publish_state("4 Hours"); break;
+              case 5:  id(fan_timer).publish_state("5 Hours"); break;
+              case 6:  id(fan_timer).publish_state("6 Hours"); break;
+              case 7:  id(fan_timer).publish_state("7 Hours"); break;
+              case 8:  id(fan_timer).publish_state("8 Hours"); break;
+              case 9:  id(fan_timer).publish_state("9 Hours"); break;
+              case 10: id(fan_timer).publish_state("10 Hours"); break;
+              case 11: id(fan_timer).publish_state("11 Hours"); break;
+              case 12: id(fan_timer).publish_state("12 Hours"); break;
+            }
+
+fan:
+  - platform: tuya
+    name: ${fan_name}
+    switch_datapoint: ${dp_power}
+    speed_datapoint: ${dp_speed}
+    direction_datapoint: ${dp_direction}
+    speed_count: ${speed_count}

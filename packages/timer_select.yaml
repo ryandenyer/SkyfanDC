@@ -1,0 +1,31 @@
+select:
+  - platform: template
+    name: "${fan_name} Timer"
+    id: fan_timer
+
+    optimistic: false
+
+    options:
+      - "Off"
+      - "1 Hour"
+      - "2 Hours"
+      - "3 Hours"
+      - "4 Hours"
+      - "5 Hours"
+      - "6 Hours"
+      - "7 Hours"
+      - "8 Hours"
+      - "9 Hours"
+      - "10 Hours"
+      - "11 Hours"
+      - "12 Hours"
+
+    set_action:
+      - lambda: |-
+          if (x == "Off")
+            id(tuya_mcu).set_enum_datapoint_value(${dp_timer}, 0);
+          else
+            id(tuya_mcu).set_enum_datapoint_value(
+              ${dp_timer},
+              atoi(x.c_str())
+            );
