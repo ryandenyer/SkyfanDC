@@ -2,7 +2,7 @@ substitutions:
 
   # Names
   fan_name: SkyFan DC
-  light_name: SkyFan Light
+  light_name: ${fan_name} Light
 
   # Fan datapoints
   dp_power: "1"
