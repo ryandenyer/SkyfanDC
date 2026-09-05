@@ -164,26 +164,6 @@ packages:
   skyfandc: github://ryandenyer/SkyfanDC/skyfandc.yaml@main
 ```
 
-## Supported Fan Models
-
-Set the fan model to enable estimated power monitoring.
-
-```yaml
-substitutions:
-  fan_model: "SKY1203"
-```
-
-Supported models:
-
-```text
-SKY903
-SKY1203
-SKY1303
-SKY1503
-SKY1204
-SKY1404
-```
-
 ## Available Entities
 
 ### Fan
@@ -239,26 +219,6 @@ substitutions:
   dp_light_dimmer: "16"
 ```
 
-## Package Structure
-
-```text
-SkyfanDC/
-│
-├── defaults.yaml
-├── skyfandc.yaml
-│
-└── packages/
-    ├── mode_select.yaml
-    ├── timer_select.yaml
-    ├── tuya_fan.yaml
-    ├── tuya_light.yaml
-    ├── sensor_power_fan.yaml
-    ├── sensor_power_light.yaml
-    ├── sensor_ntc.yaml
-    ├── sensor_tmp117.yaml
-    └── sensor_rssi.yaml
-```
-
 ## Defaults
 
 ```yaml
@@ -298,49 +258,7 @@ After configuration and provisioning, Home Assistant will automatically discover
 
 Additional sensors are included but disabled by default to minimise entity clutter.
 
-## Fan Power Modelling
-
-Fan power values are estimated from the original SkyFan DC datasheet specifications and scaled for the 5-speed ESPHome implementation.
-
-### SKY903
-
-```text
-0.0, 3.4, 5.7, 10.0, 18.0, 32.0
-```
-
-### SKY1203
-
-```text
-0.0, 4.0, 6.4, 12.2, 20.6, 32.5
-```
-
-### SKY1303
-
-```text
-0.0, 4.3, 7.1, 13.0, 23.3, 31.8
-```
-
-### SKY1503
-
-```text
-0.0, 4.3, 7.2, 13.2, 24.0, 44.2
-```
-
-### SKY1204
-
-```text
-0.0, 4.2, 7.1, 13.8, 25.0, 30.0
-```
-
-### SKY1404
-
-```text
-0.0, 3.9, 6.5, 12.2, 21.4, 38.0
-```
-
 ## Home Assistant Entity Categories
-
-The package uses Home Assistant entity categories where appropriate:
 
 ### Primary Entities
 
